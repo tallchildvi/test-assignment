@@ -23,3 +23,15 @@ class MnistClassifier(MnistClassifierInterface):
         Predicts labels using the selected model
         """
         return self._model.predict(x_test)
+    
+    def save(self, path):
+        """
+        Save model.
+        """
+        self._model.save(path)
+
+    def load(self, path):
+        """
+        Load model.
+        """
+        self._model.load()

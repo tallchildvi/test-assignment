@@ -1,3 +1,4 @@
+import joblib
 from sklearn.ensemble import RandomForestClassifier
 from interface import MnistClassifierInterface
 import numpy as np
@@ -21,3 +22,8 @@ class RandomForestModel(MnistClassifierInterface):
         #make prediction with random forest
         return self.model.predict(x_test)
     
+    def save(self, path):
+        joblib.dump(self.model, path)
+
+    def load(self, path):
+        self.model = joblib.load(path)

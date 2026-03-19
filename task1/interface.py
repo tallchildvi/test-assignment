@@ -29,3 +29,22 @@ class MnistClassifierInterface(ABC):
             np.ndarray: Predicted labels.
         """
         pass
+    @abstractmethod
+    def save(self, path: str):
+        """
+        Save model to the given path.
+
+        Args:
+            path (str): Path to save the model.
+        """
+        pass
+
+    @abstractmethod
+    def load(self, path: str):
+        """
+        Load model from the given path.
+
+        Args: 
+            path (str): Path to load the model
+        """
+        pass
