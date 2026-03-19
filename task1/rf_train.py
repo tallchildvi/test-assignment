@@ -1,5 +1,5 @@
 from utils.data_loader import get_mnist_dataset
-from classifier import MnistClassifier
+from task1.classifier import MnistClassifier
 
 # initialize model
 clf = MnistClassifier(algorithm='rf')

@@ -1,6 +1,6 @@
 import joblib
 from sklearn.ensemble import RandomForestClassifier
-from interface import MnistClassifierInterface
+from task1.interface import MnistClassifierInterface
 import numpy as np
 class RandomForestModel(MnistClassifierInterface):
     def __init__(self):
@@ -20,7 +20,7 @@ class RandomForestModel(MnistClassifierInterface):
         x_flattened = x_test.reshape(n_samples, -1)
 
         #make prediction with random forest
-        return self.model.predict(x_test)
+        return self.model.predict(x_flattened)
     
     def save(self, path):
         joblib.dump(self.model, path)
