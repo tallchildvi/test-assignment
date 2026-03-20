@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from task1.interface import MnistClassifierInterface
 from utils.data_loader import get_loader
+from sklearn.model_selection import train_test_split
 from pathlib import Path
 
 class FFNN(nn.Module):
@@ -37,16 +38,21 @@ class FeedForwardModel(MnistClassifierInterface):
         self.criterion = nn.CrossEntropyLoss()
         # Adaptive optimizer
         self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
+        # History of epochs
+        self.history = {'train_loss': [], 'val_loss': []}
 
     def train(self, x_train, y_train, augmentation=False):
-
-        train_loader = get_loader(x_train, y_train, batch_size=64, augmentation=augmentation)
+        # Split data on train and validation parts
+        x_t, x_v, y_t, y_v = train_test_split(x_train, y_train, test_size=0.1, random_state=42)
+        
+        train_loader = get_loader(x_t, y_t, batch_size=64, augmentation=augmentation)
+        val_loader = get_loader(x_v, y_v, batch_size=64, augmentation=False)
         # Enable training mode
         self.model.train()
         epochs = 20 
         # Trian loop
         for epoch in range(epochs):
-            running_loss = 0.0
+            total_train_loss = 0.0
             for images, labels in train_loader:
                 images, labels = images.to(self.device), labels.to(self.device)
                 # Reset gradients
@@ -57,10 +63,24 @@ class FeedForwardModel(MnistClassifierInterface):
                 loss.backward()
                 # Update weights
                 self.optimizer.step()
-                
-                running_loss += loss.item()
+                total_train_loss += loss.item()
+
             
-            print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss/len(train_loader):.4f}")
+            # Switching to model testing
+            self.model.eval()
+            total_val_loss = 0
+            with torch.no_grad():
+                for images, labels in val_loader:
+                    images, images = images.to(self.device), labels.to(self.device)
+                    val_loss = self.criterion(self.model(images), labels)
+                    total_val_loss += val_loss.item()
+            
+            # Save history for plotting
+            self.history['train_loss'].append(total_train_loss / len(train_loader))
+            self.history['val_loss'].append(total_val_loss / len(val_loader))
+            print(f"Epoch {epoch+1}: Loss {self.history['train_loss'][-1]:.4f} | Val Loss {self.history['val_loss'][-1]:.4f}")
+            # Switch to training mode
+            self.model.train() 
 
     def predict(self, x_test):
         # Disable dropout for inference
