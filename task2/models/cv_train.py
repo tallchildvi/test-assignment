@@ -146,11 +146,11 @@ def train(args):
 
 # Make this file module
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train ResNet18 for Animal Classification")
-    parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs")
-    parser.add_argument("--batch_size", type=int, default=32, help="Batch size")
-    parser.add_argument("--lr", type=float, default=0.001, help="Learning rate")
-    parser.add_argument("--output_dir", type=str, default="./saved_models", help="Directory to save model")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--epochs", type=int, default=5)
+    parser.add_argument("--batch_size", type=int, default=32)
+    parser.add_argument("--lr", type=float, default=0.001)
+    parser.add_argument("--output_dir", type=str, default="./saved_models")
     
     args = parser.parse_args()
     train(args)
