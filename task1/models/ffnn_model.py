@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from task1.interface import MnistClassifierInterface
 from utils.data_loader import get_loader
+from pathlib import Path
 
 class FFNN(nn.Module):
     def __init__(self):
@@ -72,7 +73,7 @@ class FeedForwardModel(MnistClassifierInterface):
             x_test = x_test[:, None, ...]
 
         test_tensor = torch.tensor(x_test, dtype=torch.float32).to(self.device)
-        
+
         # Disable gradient tracking
         with torch.no_grad():
             outputs = self.model(test_tensor)
@@ -80,3 +81,18 @@ class FeedForwardModel(MnistClassifierInterface):
             _, predicted = torch.max(outputs, 1)
             
         return predicted.cpu().numpy()
+    
+    def save(self, path):
+        """Save model weights to a file."""
+        # Ensure directory exists
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        # Save state_dict (weights only)
+        torch.save(self.model.state_dict(), path)
+        print(f"Weights saved to {path}")
+
+    def load(self, path):
+        """Load weights from a file and set model to eval mode."""
+        state_dict = torch.load(path, map_location=self.device, weights_only=True)
+        self.model.load_state_dict(state_dict)
+        self.model.eval() 
+        print(f"Weights loaded from {path}")
