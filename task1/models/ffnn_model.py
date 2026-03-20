@@ -71,7 +71,7 @@ class FeedForwardModel(MnistClassifierInterface):
             total_val_loss = 0
             with torch.no_grad():
                 for images, labels in val_loader:
-                    images, images = images.to(self.device), labels.to(self.device)
+                    images, labels = images.to(self.device), labels.to(self.device)
                     val_loss = self.criterion(self.model(images), labels)
                     total_val_loss += val_loss.item()
             
