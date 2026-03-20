@@ -6,8 +6,11 @@ weights/
 .joblib
 
 ### debug_inputs ###
-
 debug_inputs/
+
+### dataset animals ###
+
+data/
 
 ### just test file ###
 task1/test.py

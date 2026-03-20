@@ -34,9 +34,8 @@ def train(args):
     print(f"Starting training on device: {device}")
 
     # 1. Load Data
-    print("Downloading/Loading dataset from Hugging Face...")
-    full_dataset = load_dataset("dgrnd4/animals-10", split="train")
-    
+    full_dataset = load_dataset("imagefolder", data_dir="./data", split="train")
+
     # Calculate weights based on the entire distribution before splitting
     class_weights = calculate_class_weights(full_dataset).to(device)
     print(f"Calculated class weights: {class_weights}")
