@@ -1,13 +1,16 @@
 from task1.interface import MnistClassifierInterface
 from task1.models.rf_model import RandomForestModel
+from task1.models.ffnn_model import FeedForwardModel
 from pathlib import Path
 import numpy as np
 class MnistClassifier(MnistClassifierInterface):
     def __init__(self, algorithm: str):
         # self.models = {'cnn': ConvolutionalModel,
         #                'rf': RandomForestModel,
-        #                'nn': FeedForwardModel}
-        self.models = {'rf': RandomForestModel}
+        #                'ffnn': FeedForwardModel}
+        self.models = {'ffnn': FeedForwardModel,
+                       'rf': RandomForestModel}
+        
         algorigthm = algorithm.lower()
         if algorigthm not in self.models:
             raise ValueError(f"Invalid values for algorithm: {algorithm}, expected values: {list(self.models)}")

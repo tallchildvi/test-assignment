@@ -48,11 +48,10 @@ class MnistDataset(Dataset):
 
 def get_loader(x, y, batch_size=64, augmentation=False):
     """
-    Standard loader. 
-    Set augmentation=True for training  only.
+    Standard loader for NN models. 
     """
     t_list = [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
-    # Add image transfomation
+    # Add image transfomations
     if augmentation:
         t_list = [
             transforms.RandomRotation(15),
