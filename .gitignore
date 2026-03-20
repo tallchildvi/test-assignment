@@ -5,6 +5,10 @@
 weights/
 .joblib
 
+### debug_inputs ###
+
+debug_inputs/
+
 ### just test file ###
 task1/test.py
 task2/test.py
