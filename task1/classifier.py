@@ -1,15 +1,14 @@
 from task1.interface import MnistClassifierInterface
 from task1.models.rf_model import RandomForestModel
 from task1.models.ffnn_model import FeedForwardModel
+from task1.models.cnn_model import ConvolutionalModel
 from pathlib import Path
 import numpy as np
 class MnistClassifier(MnistClassifierInterface):
     def __init__(self, algorithm: str):
-        # self.models = {'cnn': ConvolutionalModel,
-        #                'rf': RandomForestModel,
-        #                'ffnn': FeedForwardModel}
-        self.models = {'ffnn': FeedForwardModel,
-                       'rf': RandomForestModel}
+        self.models = {'cnn': ConvolutionalModel,
+                       'rf': RandomForestModel,
+                       'ffnn': FeedForwardModel}
         
         algorigthm = algorithm.lower()
         if algorigthm not in self.models:
