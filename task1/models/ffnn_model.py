@@ -86,6 +86,12 @@ class FeedForwardModel(MnistClassifierInterface):
         # Disable dropout for inference
         self.model.eval()
 
+        # Data normalization
+        if x_test.max() > 1.0:
+            x_test = x_test / 255.0
+        x_test = (x_test - 0.5) / 0.5
+
+
         # Ensure batch dimentions
         if len(x_test.shape) == 2:
             x_test = x_test[None, None, ...]

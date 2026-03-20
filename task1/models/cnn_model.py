@@ -16,15 +16,15 @@ class CNN(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         
-        # Fully connected layers (64 channels * 7 * 7 image size after pooling)
+        # Fully connected layers
         self.fc1 = nn.Linear(64 * 7 * 7, 128)
         self.fc2 = nn.Linear(128, 10)
 
         # Prevents overfitting
-        self.dropout = nn.Dropout(0.25)
+        self.dropout = nn.Dropout(0.5)
 
     def forward(self, x):
-        # Apply convolution, activation, and pooling
+        # Apply convolution, activation and pooling
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         
@@ -43,7 +43,7 @@ class ConvolutionalModel(MnistClassifierInterface):
         # Loss function for classification 
         self.criterion = nn.CrossEntropyLoss()
         # Adaptive optimizer
-        self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=0.0005, weight_decay=1e-4)
         # History of epochs
         self.history = {'train_loss': [], 'val_loss': []}
 
@@ -55,7 +55,7 @@ class ConvolutionalModel(MnistClassifierInterface):
         val_loader = get_loader(x_v, y_v, batch_size=64, augmentation=False)
         # Enable training mode
         self.model.train()
-        epochs = 20 
+        epochs = 11 
         # Train loop
         for epoch in range(epochs):
             total_train_loss = 0.0
@@ -90,6 +90,11 @@ class ConvolutionalModel(MnistClassifierInterface):
     def predict(self, x_test):
         # Disable dropout for inference
         self.model.eval()
+        
+        # Data normalization
+        if x_test.max() > 1.0:
+            x_test = x_test / 255.0
+        x_test = (x_test - 0.5) / 0.5
 
         # Ensure batch dimentions
         if len(x_test.shape) == 2:

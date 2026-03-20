@@ -10,7 +10,7 @@ clf = MnistClassifier(algorithm='cnn')
 # Train model
 clf.train(X_train, y_train, augmentation=True)
 # Save model
-clf.save("weights/ffnn_model.pth")
+clf.save("weights/сnn_model.pth")
 
 history = clf._model.history
 
