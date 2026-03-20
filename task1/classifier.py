@@ -41,4 +41,4 @@ class MnistClassifier(MnistClassifierInterface):
         """
         Load model.
         """
-        self._model.load()
+        self._model.load(path)

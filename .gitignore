@@ -4,6 +4,10 @@
 ### Models Weight ###
 weights/
 .joblib
+
+### just test file ###
+task1/test.py
+task2/test.py
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
