@@ -17,7 +17,7 @@ class MnistClassifier(MnistClassifierInterface):
         
         self._model = self.models[algorigthm]()
     
-    def train(self, x_train: np.ndarray, y_train: np.ndarray):
+    def train(self, x_train: np.ndarray, y_train: np.ndarray, augmentation: bool = False):
         """
         Trains the selected model
         """
