@@ -1,4 +1,4 @@
-# Technical Analysis: Task 1 — MNIST Classification System
+# Task 1 — MNIST Classification System
 
 The digit classification system is engineered using a modular, object-oriented framework designed for high-performance inference and comparative benchmarking.
 
@@ -79,15 +79,3 @@ The relatively low epoch counts required for both models can be attributed to th
  
 ![СNN Graph](cnn_graph.png)
 ![FFNN Graph](ffnn_graph.png)
-
-### Real-Time Inference (Gradio)
-
-The interactive `demo.ipynb` serves as a "wild" testing environment.
-
-**Inference Pipeline** — raw user sketches undergo a specialized preprocessing sequence:
-
-1. Alpha-blending with a white background
-2. Color inversion
-3. Resizing via `LANCZOS` interpolation
-
-**Signal Enhancement** — a contrast enhancement step (1.5× pixel value scaling) is applied to ensure the input signal matches the high-contrast distribution of the MNIST dataset.
