@@ -23,7 +23,7 @@ class RandomForestModel(MnistClassifierInterface):
         return self.model.predict(x_flattened)
     
     def save(self, path):
-        joblib.dump(self.model, path)
+        joblib.dump(self.model, filename=path, compress=3)
 
     def load(self, path):
         self.model = joblib.load(path)
