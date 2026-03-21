@@ -48,7 +48,6 @@ The CV module (`cv_train.py`, `cv_inference.py`) implements transfer learning on
 | Optimizer | `Adam`, LR=0.001 |
 | Batch Size | 32 |
 | Data Split | 85% train / 15% validation |
-| Checkpointing | Best model saved on new `val_loss` minimum |
 
 At inference time (`cv_inference.py`), the model is loaded in `eval()` mode with `torch.no_grad()`, and predictions are made via `torch.max(outputs, 1)` over raw logits — no softmax is applied, as `argmax` over logits is equivalent for deterministic prediction.
 
